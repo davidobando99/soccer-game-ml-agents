@@ -200,20 +200,20 @@ namespace Server
                 Program.form.DebugTextBox.Text += "\r\nNew Client trying to join server. Requesting authentication.";
                 if (aData[0] == "Iam")
                 {
-                    // bool authenticated = aData[1]!=""&& aData[2]!="";
-                    //if (authenticated)
-                    //{
-                   /* foreach (ServerClient client in clients)
+                    bool authenticated = Database.AuthenticateUser(aData[1], aData[2]);
+                    if (authenticated)
                     {
-                        if (aData[1] == client.clientName)
+                        foreach (ServerClient client in clients)
                         {
-                            Program.form.DebugTextBox.Text += "\r\nThis user is already connected";
-                            c.tcp.Close();
-                            disconnectList.Add(c);
-                            return;
-                        }*/
-                  // }
-                    c.clientName = aData[1];
+                            if (aData[1] == client.clientName)
+                            {
+                                Program.form.DebugTextBox.Text += "\r\nThis user is already connected";
+                                c.tcp.Close();
+                                disconnectList.Add(c);
+                                return;
+                            }
+                        }
+                        c.clientName = aData[1];
                         Program.form.DebugTextBox.Text += "\r\nUser authenticated";
                         Broadcast("Authenticated|", c);
                     }
@@ -225,7 +225,7 @@ namespace Server
                     }
                     return;
                 }
-            //}
+            }
 
 
             //gameplay commands
@@ -324,5 +324,18 @@ namespace Server
         public float unitPositionZ;
     }
 
-  
+    //NOTE: never store sensitive user data like passwords like this in an actual product. use something like hashing... 
+    public static class Database
+    {
+        public static bool AuthenticateUser(string username, string password)
+        {
+            int result = 0;
+            result = (int)Program.form.usersTableAdapter.Authenticate(username, password);
+            if (result == 1)
+            {
+                return true;
+            }
+            else return false;
+        }
+    }
 }
