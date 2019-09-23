@@ -49,6 +49,7 @@ namespace Assets.Modelo
                 stream = socket.GetStream();
                 writer = new StreamWriter(stream);
                 reader = new StreamReader(stream);
+                
 
                 socketReady = true;
             }
