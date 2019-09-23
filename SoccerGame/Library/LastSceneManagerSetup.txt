@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/1- Scene/ClientLogin.unity
+- path: Assets/1- Scene/SampleScene.unity
   isLoaded: 1
   isActive: 1

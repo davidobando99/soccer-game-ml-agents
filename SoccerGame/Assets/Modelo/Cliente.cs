@@ -26,11 +26,7 @@ namespace Assets.Modelo
         private List<Move> unitsOnMap = new List<Move>();
         // private CultureInfo culture = (CultureInfo)CultureInfo.CurrentCulture.Clone();
 
-            public Cliente()
-        {
-            clientName = "David";
-            password = "David";
-        }
+        
 
         private void Start()
         {
@@ -63,8 +59,11 @@ namespace Assets.Modelo
 
         private void Update()
         {
+
+           
             if (socketReady)
             {
+                print("update");
                 if (stream.DataAvailable)
                 {
                     string data = reader.ReadLine();
@@ -96,7 +95,7 @@ namespace Assets.Modelo
                     Send("Iam|" + clientName + "|" + password);
                     break;
                 case "Authenticated":
-                    SceneManager.LoadScene("ClientGameView");
+                    SceneManager.LoadScene("SampleScene");
                     break;
                 case "UnitSpawned":
                     GameObject prefab = Resources.Load("Player1") as GameObject;
@@ -224,12 +223,15 @@ namespace Assets.Modelo
 
         public void ConnectToServerButton()
         {
+            print("hhh");
             password = passwordInputField.text;
             clientName = clientNameInputField.text;
+            
             CloseSocket();
             try
             {
                 ConnectToServer(serverAddressInputField.text, portToConnect);
+
             }
             catch (Exception e)
             {
