@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Assets.Modelo;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,17 +8,21 @@ using System.Threading.Tasks;
 namespace Assets.Controlador
 {
     class ControladorCliente
+        
     {
+        private Cliente Cliente;
         public  ControladorCliente()
         {
+            Cliente = new Cliente();
 
         }
 
-        public string CoordenadasGameObject(float x, float y)
+        public void Send(float x, float y, int unitID)
         {
-            string info = "Coordenada x " +x+ "Coordenada y: "+y;
-            return info;
-
+            String info = "Moving|" + unitID + "|" + x + "|" + y + "|";
+            Cliente.Send(info);
         }
+        
+
     }
 }

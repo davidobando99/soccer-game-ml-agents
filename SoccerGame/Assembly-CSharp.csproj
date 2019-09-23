@@ -64,6 +64,7 @@
     <Compile Include="Assets\2-Scripts\Move.cs" />
     <Compile Include="Assets\2-Scripts\RotateAround.cs" />
     <Compile Include="Assets\Controlador\ControladorCliente.cs" />
+    <Compile Include="Assets\Modelo\Cliente.cs" />
     <Reference Include="Unity.TextMeshPro.Editor">
       <HintPath>C:/Users/Laura/git/SoccerGame/SoccerGame/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>
