@@ -61,8 +61,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\2-Scripts\Colide.cs" />
-    <Compile Include="Assets\2-Scripts\Move.cs" />
     <Compile Include="Assets\2-Scripts\RotateAround.cs" />
+    <Compile Include="Assets\2-Scripts\Unit.cs" />
     <Compile Include="Assets\Controlador\ControladorCliente.cs" />
     <Compile Include="Assets\Modelo\Cliente.cs" />
     <Reference Include="Unity.TextMeshPro.Editor">

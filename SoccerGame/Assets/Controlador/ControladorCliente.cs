@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 namespace Assets.Controlador
@@ -12,15 +13,12 @@ namespace Assets.Controlador
     class ControladorCliente : MonoBehaviour
 
     {
-        private Cliente Cliente;
-        public  ControladorCliente()
-        {
-            Cliente = new Cliente();
-
-        }
+        public static Cliente Cliente;
+        public  Button jugarButton;
+       
         private void Awake()
         {
-            print("awake");
+            
             
             GameObject go = GameObject.Find("Cliente");
             if (go == null)
@@ -39,11 +37,19 @@ namespace Assets.Controlador
 
             Cliente.Send("SynchronizeRequest|");
         }
-        public void Send(float x, float y, int unitID)
+
+        public void Jugar()
         {
-            String info = "Moving|" + unitID + "|" + x + "|" + y + "|";
-            Cliente.Send(info);
+            print("EEEEE");
+            Cliente.Send("Jugar|");
+            jugarButton.interactable = false;
+
         }
+        //public void Send(float x, float y, int unitID)
+        //{
+        //    String info = "Moving|" + unitID + "|" + x + "|" + y ;
+        //    Cliente.Send(info);
+        //}
         
 
     }
