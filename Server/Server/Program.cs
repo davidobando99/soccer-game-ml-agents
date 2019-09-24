@@ -240,6 +240,8 @@ namespace Server
                     unit.clientName = c.clientName;
                     //give a new ID to the new units
                     int newid = 0;
+                    //if (c.clientName.Equals("admin")) newid = 0;
+                    //else newid = 1;
                     foreach (Unit u in units)
                     {
                         if (u.unitID >= newid) { newid = u.unitID + 1; }
@@ -266,6 +268,7 @@ namespace Server
                     {
                         if (u.unitID == id)
                         {
+                            Console.WriteLine(u.unitID+"");
                             u.unitPositionX = parsedX;
                             u.unitPositionY = parsedY;
                             

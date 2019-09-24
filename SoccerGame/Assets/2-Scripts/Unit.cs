@@ -29,22 +29,22 @@ public class Unit : MonoBehaviour
         
 
         //realizo el avance
-        Vector2 moveVector = new Vector2(moveX * Speed * Time.deltaTime, moveY * Speed * Time.deltaTime);
-        transform.Translate(moveVector);
+        
         if (isPlayersUnit && Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) ||Input.GetKey(KeyCode.D))
         {
+            Vector2 moveVector = new Vector2(moveX * Speed * Time.deltaTime, moveY * Speed * Time.deltaTime);
+            transform.Translate(moveVector);
             ControladorCliente.Cliente.Send("Moving|" + unitID + "|" + transform.position.x + "|" + transform.position.y);
-            //if (unitID >= 2)
-            //{
-            //    ControladorCliente.Cliente.Send("SynchronizeRequest|");
-            //}
            
+               // ControladorCliente.Cliente.Send("SynchronizeRequest|");
+            
+
         }
             
         //Fijo limites
-        float newmovex = Mathf.Clamp(transform.position.x, 1, 17);
-        float newmovey = Mathf.Clamp(transform.position.y, 1, 9);
-        transform.position = new Vector3(newmovex, newmovey);
+        //float newmovex = Mathf.Clamp(transform.position.x, 1, 17);
+        //float newmovey = Mathf.Clamp(transform.position.y, 1, 9);
+        //transform.position = new Vector3(newmovex, newmovey);
         
         // SendCordenadas();
 
@@ -55,9 +55,9 @@ public class Unit : MonoBehaviour
     {
         transform.Translate(vector);
        
-        float NewmoveX = Mathf.Clamp(transform.position.x, 1, 17);
-        float NewmoveY = Mathf.Clamp(transform.position.y, 1, 9);
-        transform.position = new Vector3(NewmoveX, NewmoveY);
+        //float NewmoveX = Mathf.Clamp(transform.position.x, 1, 17);
+        //float NewmoveY = Mathf.Clamp(transform.position.y, 1, 9);
+        //transform.position = new Vector3(NewmoveX, NewmoveY);
     }
 
  
