@@ -107,6 +107,7 @@ namespace Assets.Modelo
                     // go.GetComponent<UnityEngine.AI.NavMeshAgent>().Warp(new Vector3(parsedX, parsedY));
                     //go.transform.position = new Vector2(parsedX, parsedY);
                     Unit un = go.AddComponent<Unit>();
+                    
                     unitsOnMap.Add(un);
                     int parsed;
                     Int32.TryParse(aData[2], out parsed);
@@ -136,7 +137,7 @@ namespace Assets.Modelo
                                 parsedX = float.Parse(aData[3]);
                                 parsedY = float.Parse(aData[4]);
                                 
-                                unit.MoveTo(new Vector3(parsedX, parsedY));
+                                unit.MoveTo(new Vector2(parsedX, parsedY));
                             }
                         }
                     }
@@ -158,7 +159,7 @@ namespace Assets.Modelo
                                 parsedX = float.Parse(aData[3 + i * 2]);
                                 parsedY = float.Parse(aData[4 + i * 2]);
                                
-                                unit.MoveTo(new Vector3(parsedX, parsedY));
+                                unit.MoveTo(new Vector2(parsedX, parsedY));
                                 didFind = true;
                             }
                         }
@@ -171,7 +172,7 @@ namespace Assets.Modelo
                             un.unitID = serverUnitID;
                             parsedX = float.Parse(aData[3 + i * 2]);
                             parsedY = float.Parse(aData[4 + i * 2]);
-                            go.transform.position = new Vector3(parsedX, parsedY);
+                            go.transform.position = new Vector2(parsedX, parsedY);
                            
                         }
 

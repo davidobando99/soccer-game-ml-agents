@@ -26,26 +26,35 @@ public class Unit : MonoBehaviour
         float moveX = Input.GetAxis("Horizontal");
         float moveY = Input.GetAxis("Vertical");
 
+        
+
         //realizo el avance
         Vector2 moveVector = new Vector2(moveX * Speed * Time.deltaTime, moveY * Speed * Time.deltaTime);
         transform.Translate(moveVector);
-
+        if (isPlayersUnit && Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) ||Input.GetKey(KeyCode.D))
+        {
+            ControladorCliente.Cliente.Send("Moving|" + unitID + "|" + transform.position.x + "|" + transform.position.y);
+            //if (unitID >= 2)
+            //{
+            //    ControladorCliente.Cliente.Send("SynchronizeRequest|");
+            //}
+           
+        }
+            
         //Fijo limites
         float newmovex = Mathf.Clamp(transform.position.x, 1, 17);
         float newmovey = Mathf.Clamp(transform.position.y, 1, 9);
         transform.position = new Vector3(newmovex, newmovey);
+        
         // SendCordenadas();
-       if(transform.position.x != moveX && transform.position.y != moveY)
-        {
-            ControladorCliente.Cliente.Send("Moving|" + unitID + "|" + transform.position.x + "|" + transform.position.y);
-        }
-       
+
 
 
     }
     public void MoveTo(Vector2 vector)
     {
         transform.Translate(vector);
+       
         float NewmoveX = Mathf.Clamp(transform.position.x, 1, 17);
         float NewmoveY = Mathf.Clamp(transform.position.y, 1, 9);
         transform.position = new Vector3(NewmoveX, NewmoveY);
