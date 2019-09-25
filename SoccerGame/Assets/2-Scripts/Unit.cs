@@ -26,18 +26,19 @@ public class Unit : MonoBehaviour
         float moveX = Input.GetAxis("Horizontal");
         float moveY = Input.GetAxis("Vertical");
 
-        
+
 
         //realizo el avance
         
-        if (isPlayersUnit && Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) ||Input.GetKey(KeyCode.D))
+
+        if (isPlayersUnit && Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D))
         {
             Vector2 moveVector = new Vector2(moveX * Speed * Time.deltaTime, moveY * Speed * Time.deltaTime);
             transform.Translate(moveVector);
             ControladorCliente.Cliente.Send("Moving|" + unitID + "|" + transform.position.x + "|" + transform.position.y);
-           
-               // ControladorCliente.Cliente.Send("SynchronizeRequest|");
-            
+
+            // ControladorCliente.Cliente.Send("SynchronizeRequest|");
+
 
         }
             

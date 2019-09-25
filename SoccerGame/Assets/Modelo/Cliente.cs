@@ -32,7 +32,7 @@ namespace Assets.Modelo
         private void Start()
         {
             DontDestroyOnLoad(gameObject);
-            culture.NumberFormat.NumberDecimalSeparator = ".";
+           // culture.NumberFormat.NumberDecimalSeparator = ".";
         }
 
         public bool ConnectToServer(string host, int port)
@@ -101,12 +101,12 @@ namespace Assets.Modelo
                 case "UnitSpawned":
                     GameObject prefab = Resources.Load("prefabs/Player3") as GameObject;
                     GameObject go = Instantiate(prefab);
-
-                    float parsedX = float.Parse(aData[3], culture);
-                    float parsedY = float.Parse(aData[4], culture);
+                     
+                    float parsedX = float.Parse(aData[3]);
+                    float parsedY = float.Parse(aData[4]);
 
                     // go.GetComponent<UnityEngine.AI.NavMeshAgent>().Warp(new Vector3(parsedX, parsedY));
-                    //go.transform.position = new Vector2(parsedX, parsedY);
+                    go.transform.position = new Vector2(parsedX, parsedY);
                     Unit un = go.AddComponent<Unit>();
                    
                     unitsOnMap.Add(un);
@@ -135,8 +135,8 @@ namespace Assets.Modelo
                         {
                             if (unit.unitID == parsed)
                             {
-                                parsedX = float.Parse(aData[3],culture);
-                                parsedY = float.Parse(aData[4], culture);
+                                parsedX = float.Parse(aData[3]);
+                                parsedY = float.Parse(aData[4]);
                                 
                                 unit.MoveTo(new Vector2(parsedX, parsedY));
                             }
@@ -157,8 +157,8 @@ namespace Assets.Modelo
                         {
                             if (unit.unitID == serverUnitID)
                             {
-                                parsedX = float.Parse(aData[3 + i * 3],culture);
-                                parsedY = float.Parse(aData[4 + i * 3],culture);
+                                parsedX = float.Parse(aData[3 + i * 3]);
+                                parsedY = float.Parse(aData[4 + i * 3]);
                                
                                 unit.MoveTo(new Vector2(parsedX, parsedY));
                                 didFind = true;
@@ -171,8 +171,8 @@ namespace Assets.Modelo
                             un = go.AddComponent<Unit>();
                             unitsOnMap.Add(un);
                             un.unitID = serverUnitID;
-                            parsedX = float.Parse(aData[3 + i * 3],culture);
-                            parsedY = float.Parse(aData[4 + i * 3],culture);
+                            parsedX = float.Parse(aData[3 + i * 3]);
+                            parsedY = float.Parse(aData[4 + i * 3]);
                             go.transform.position = new Vector2(parsedX, parsedY);
                            
                         }

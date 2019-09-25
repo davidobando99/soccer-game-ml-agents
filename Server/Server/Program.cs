@@ -22,9 +22,9 @@ namespace Server
         {
 
             //use points for floats for easy compatibility with coordinates
-            CultureInfo customCulture = (CultureInfo)System.Threading.Thread.CurrentThread.CurrentCulture.Clone();
-            customCulture.NumberFormat.NumberDecimalSeparator = ".";
-            System.Threading.Thread.CurrentThread.CurrentCulture = customCulture;
+            //CultureInfo customCulture = (CultureInfo)System.Threading.Thread.CurrentThread.CurrentCulture.Clone();
+            //customCulture.NumberFormat.NumberDecimalSeparator = ".";
+            //System.Threading.Thread.CurrentThread.CurrentCulture = customCulture;
 
             server = new ServerAction();
 
@@ -246,10 +246,10 @@ namespace Server
                     {
                         if (u.unitID >= newid) { newid = u.unitID + 1; }
                     }
-
+                   
                     unit.unitID = newid;
-                    unit.unitPositionX = 0.0f;
-                    unit.unitPositionY = 0.0f;
+                    unit.unitPositionX = 1.5f;
+                    unit.unitPositionY = 1.5f;
                     
                     units.Add(unit);
                     Broadcast("UnitSpawned|" + c.clientName + "|" + unit.unitID + "|" + unit.unitPositionX + "|" + unit.unitPositionY , clients);
@@ -269,12 +269,15 @@ namespace Server
                         if (u.unitID == id)
                         {
                             Console.WriteLine(u.unitID+"");
+                            Console.WriteLine(parsedX + "");
+                            Console.WriteLine(parsedY + "");
                             u.unitPositionX = parsedX;
                             u.unitPositionY = parsedY;
                             
                         }
                     }
                     Program.form.DebugTextBox.Text += "\r\n" + parsedX + "  " + parsedY;
+                   
                     break;
                 default:
                     Program.form.DebugTextBox.Text += "\r\nReceived unknown signal => skipping";
