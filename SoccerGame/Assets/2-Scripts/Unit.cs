@@ -2,65 +2,79 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Unit : MonoBehaviour
 {
     private float Speed;
-    private ControladorCliente cc;
+
     public int unitID;
     public bool isPlayersUnit;
+    public string clientName;
 
     // Start is called before the first frame update
-    void Start()
-    {
-        Speed = 5f;
-        
-        cc = new ControladorCliente();
-        
-    }
+
 
     // Update is called once per frame
     void Update()
     {
         //Obtengo posiciones
-        float moveX = Input.GetAxis("Horizontal");
-        float moveY = Input.GetAxis("Vertical");
+
 
 
 
         //realizo el avance
-        
 
-        if (isPlayersUnit && Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D))
+
+        if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D))
         {
-            Vector2 moveVector = new Vector2(moveX * Speed * Time.deltaTime, moveY * Speed * Time.deltaTime);
-            transform.Translate(moveVector);
-            ControladorCliente.Cliente.Send("Moving|" + unitID + "|" + transform.position.x + "|" + transform.position.y);
+            if (clientName.Equals("admin"))
+            {
+                float moveX = Input.GetAxis("Horizontal");
+                float moveY = Input.GetAxis("Vertical");
+                Vector2 moveVector = new Vector2(moveX * 5f * Time.deltaTime, moveY * 5f * Time.deltaTime);
+                transform.Translate(moveVector);
+                ControladorCliente.Cliente.Send("Moving|" + 0 + "|" + transform.position.x + "|" + transform.position.y);
+                // ControladorCliente.Cliente.Send("SynchronizeRequest|"+"admin2");
+            }
+            else
+            {
+                float moveX = Input.GetAxis("Horizontal");
+                float moveY = Input.GetAxis("Vertical");
+                Vector2 moveVector = new Vector2(moveX * 5f * Time.deltaTime, moveY * 5f * Time.deltaTime);
+                transform.Translate(moveVector);
+                ControladorCliente.Cliente.Send("Moving|" + 1 + "|" + transform.position.x + "|" + transform.position.y);
+                //ControladorCliente.Cliente.Send("SynchronizeRequest|" + "admin");
+            }
 
-            // ControladorCliente.Cliente.Send("SynchronizeRequest|");
+
+
 
 
         }
-            
+
         //Fijo limites
         //float newmovex = Mathf.Clamp(transform.position.x, 1, 17);
         //float newmovey = Mathf.Clamp(transform.position.y, 1, 9);
         //transform.position = new Vector3(newmovex, newmovey);
-        
+
         // SendCordenadas();
 
 
 
     }
-    public void MoveTo(Vector2 vector)
+    public void MoveTo(float moveX, float moveY)
     {
-        transform.Translate(vector);
-       
+
+        Vector2 moveVector = new Vector2(moveX, moveY);
+        transform.Translate(moveVector);
+
         //float NewmoveX = Mathf.Clamp(transform.position.x, 1, 17);
         //float NewmoveY = Mathf.Clamp(transform.position.y, 1, 9);
         //transform.position = new Vector3(NewmoveX, NewmoveY);
     }
 
- 
+
+
 
 }

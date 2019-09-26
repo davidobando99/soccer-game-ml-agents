@@ -7,19 +7,21 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.EventSystems;
 
 namespace Assets.Controlador
 {
     class ControladorCliente : MonoBehaviour
 
     {
+
         public static Cliente Cliente;
-        public  Button jugarButton;
-       
+        public Button jugarButton;
+
         private void Awake()
         {
-            
-            
+
+
             GameObject go = GameObject.Find("Cliente");
             if (go == null)
             {
@@ -34,7 +36,7 @@ namespace Assets.Controlador
                 return;
             }
 
-
+            print("awakeee");
             Cliente.Send("SynchronizeRequest|");
         }
 
@@ -50,7 +52,7 @@ namespace Assets.Controlador
         //    String info = "Moving|" + unitID + "|" + x + "|" + y ;
         //    Cliente.Send(info);
         //}
-        
+
 
     }
 }

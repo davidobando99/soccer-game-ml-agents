@@ -245,14 +245,17 @@ namespace Server
                     foreach (Unit u in units)
                     {
                         if (u.unitID >= newid) { newid = u.unitID + 1; }
+
+
+
                     }
-                   
+
                     unit.unitID = newid;
                     unit.unitPositionX = 1.5f;
                     unit.unitPositionY = 1.5f;
-                    
+
                     units.Add(unit);
-                    Broadcast("UnitSpawned|" + c.clientName + "|" + unit.unitID + "|" + unit.unitPositionX + "|" + unit.unitPositionY , clients);
+                    Broadcast("UnitSpawned|" + c.clientName + "|" + unit.unitID + "|" + unit.unitPositionX + "|" + unit.unitPositionY, clients);
                     break;
                 case "Moving":
                     Broadcast("UnitMoved|" + c.clientName + "|" + aData[1] + "|" + aData[2] + "|" + aData[3], clients);
@@ -260,24 +263,24 @@ namespace Server
                     Int32.TryParse(aData[1], out id);
                     float parsedX;
                     float parsedY;
-                    
+
                     float.TryParse(aData[2], out parsedX);
                     float.TryParse(aData[3], out parsedY);
-                    
+
                     foreach (Unit u in units)
                     {
                         if (u.unitID == id)
                         {
-                           // Console.WriteLine(u.unitID+"");
-                           // Console.WriteLine(parsedX + "");
-                           // Console.WriteLine(parsedY + "");
+                            // Console.WriteLine(u.unitID+"");
+                            // Console.WriteLine(parsedX + "");
+                            // Console.WriteLine(parsedY + "");
                             u.unitPositionX = parsedX;
                             u.unitPositionY = parsedY;
-                            
+
                         }
                     }
                     //Program.form.DebugTextBox.Text += "\r\n" + parsedX + "  " + parsedY;
-                   
+
                     break;
                 default:
                     //Program.form.DebugTextBox.Text += "\r\nReceived unknown signal => skipping";
@@ -303,10 +306,10 @@ namespace Server
             string dataToSend = "Synchronizing|" + units.Count;
             foreach (Unit u in units)
             {
-                dataToSend += "|" + (u.unitID) + "|" + u.unitPositionX + "|" + u.unitPositionY ;
+                dataToSend += "|" + (u.unitID) + "|" + u.unitPositionX + "|" + u.unitPositionY;
             }
             Broadcast(dataToSend, clients);
-           // Program.form.DebugTextBox.Text += "\r\nSynchronization request sent: " + dataToSend;
+            // Program.form.DebugTextBox.Text += "\r\nSynchronization request sent: " + dataToSend;
         }
     }
 
@@ -327,7 +330,7 @@ namespace Server
         public int unitID;
         public float unitPositionX;
         public float unitPositionY;
-        
+
     }
 
     //NOTE: never store sensitive user data like passwords like this in an actual product. use something like hashing... 

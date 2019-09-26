@@ -25,14 +25,14 @@ namespace Assets.Modelo
         public InputField serverAddressInputField;
         public InputField passwordInputField;
         private List<Unit> unitsOnMap = new List<Unit>();
-        private CultureInfo culture = (CultureInfo)CultureInfo.CurrentCulture.Clone();
+        //private CultureInfo culture = (CultureInfo)CultureInfo.CurrentCulture.Clone();
 
-        
+
 
         private void Start()
         {
             DontDestroyOnLoad(gameObject);
-           // culture.NumberFormat.NumberDecimalSeparator = ".";
+            // culture.NumberFormat.NumberDecimalSeparator = ".";
         }
 
         public bool ConnectToServer(string host, int port)
@@ -46,7 +46,7 @@ namespace Assets.Modelo
                 stream = socket.GetStream();
                 writer = new StreamWriter(stream);
                 reader = new StreamReader(stream);
-                
+
 
                 socketReady = true;
             }
@@ -61,10 +61,10 @@ namespace Assets.Modelo
         private void Update()
         {
 
-           
+
             if (socketReady)
             {
-               
+
                 if (stream.DataAvailable)
                 {
                     string data = reader.ReadLine();
@@ -101,33 +101,32 @@ namespace Assets.Modelo
                 case "UnitSpawned":
                     GameObject prefab = Resources.Load("prefabs/Player3") as GameObject;
                     GameObject go = Instantiate(prefab);
-                     
+
                     float parsedX = float.Parse(aData[3]);
                     float parsedY = float.Parse(aData[4]);
 
-                    // go.GetComponent<UnityEngine.AI.NavMeshAgent>().Warp(new Vector3(parsedX, parsedY));
+
                     go.transform.position = new Vector2(parsedX, parsedY);
                     Unit un = go.AddComponent<Unit>();
-                   
+
                     unitsOnMap.Add(un);
                     int parsed;
                     Int32.TryParse(aData[2], out parsed);
                     un.unitID = parsed;
 
-                    if (aData[1] == clientName)
+                    if (aData[1].Equals(clientName))
                     {
-                        un.isPlayersUnit = true;
+                        un.clientName = clientName;
                     }
-                    else
-                    {
-                        un.isPlayersUnit = false;
-                    }
+
                     break;
                 case "UnitMoved":
                     if (aData[1] == clientName)
                     {
                         return;
                     }
+
+
                     else
                     {
                         Int32.TryParse(aData[2], out parsed);
@@ -137,36 +136,41 @@ namespace Assets.Modelo
                             {
                                 parsedX = float.Parse(aData[3]);
                                 parsedY = float.Parse(aData[4]);
-                                
-                                unit.MoveTo(new Vector2(parsedX, parsedY));
+
+                                unit.transform.position = new Vector2(parsedX, parsedY);
                             }
                         }
                     }
                     break;
                 case "Synchronizing":
+
+
                     int numberOfUnitsOnServersMap;
                     Int32.TryParse(aData[1], out numberOfUnitsOnServersMap);
                     int serverUnitID;
                     int[] serverUnitIDs = new int[numberOfUnitsOnServersMap];
+
                     for (int i = 0; i < numberOfUnitsOnServersMap; i++)
                     {
+
                         Int32.TryParse(aData[2 + i * 3], out serverUnitID);
                         serverUnitIDs[i] = serverUnitID;
                         bool didFind = false;
+                        print("cantidad units cliente  " + unitsOnMap.Count);
                         foreach (Unit unit in unitsOnMap) //synchronize existing units
                         {
                             if (unit.unitID == serverUnitID)
                             {
                                 parsedX = float.Parse(aData[3 + i * 3]);
                                 parsedY = float.Parse(aData[4 + i * 3]);
-                               
-                                unit.MoveTo(new Vector2(parsedX, parsedY));
+
+                                unit.MoveTo(parsedX, parsedY);
                                 didFind = true;
                             }
                         }
                         if (!didFind) //add non-existing (at client) units
                         {
-                            prefab = Resources.Load("prefabs/Player3") as GameObject;
+                            prefab = Resources.Load("prefabs/Player2") as GameObject;
                             go = Instantiate(prefab);
                             un = go.AddComponent<Unit>();
                             unitsOnMap.Add(un);
@@ -174,10 +178,12 @@ namespace Assets.Modelo
                             parsedX = float.Parse(aData[3 + i * 3]);
                             parsedY = float.Parse(aData[4 + i * 3]);
                             go.transform.position = new Vector2(parsedX, parsedY);
-                           
-                        }
 
+
+                        }
                     }
+
+
                     //remove units which are not on server's list (like disconnected ones)
                     foreach (Unit unit in unitsOnMap)
                     {
@@ -226,10 +232,10 @@ namespace Assets.Modelo
 
         public void ConnectToServerButton()
         {
-            
+
             password = passwordInputField.text;
             clientName = clientNameInputField.text;
-            
+
             CloseSocket();
             try
             {

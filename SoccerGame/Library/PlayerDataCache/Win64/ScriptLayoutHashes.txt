@@ -1,6 +1,6 @@
 Win64
 PlayerPath?
-C:/Users/Laura/git/SoccerGame/SoccerGame/SoccerGame.exe
+C:/Users/David Obando/Repos/SoccerGame/SoccerGame.exe
 SceneListBegin?
 Assets/1- Scene/ClientLogin.unity
 Assets/1- Scene/SampleScene.unity
@@ -124,7 +124,7 @@ b3ab2106268377ffe25dd18ac23dca28 Unity.TextMeshPro.dll:TMPro.TMP_Asset
 0650018d54f9412077a64f9616cbc571 Assembly-CSharp.dll:Assets.Controlador.ControladorCliente
 71bb6a6b6c8f052f948db64c7dd3ca4f Unity.Analytics.Editor.dll:UnityEditor.Analytics.AnalyticsEventTrackerEditor
 71bb6a6b6c8f052f948db64c7dd3ca4f Unity.TextMeshPro.dll:TMPro.TMP_SpriteAnimator
-f6ffe42552b7ab9dfa627e8206ec340b Assembly-CSharp.dll:.Unit
+b832b8c0c922e43185680c3305c47eb6 Assembly-CSharp.dll:.Unit
 4fd8bf02e3089425d3502e26c44ba31a Unity.TextMeshPro.dll:TMPro.TextContainer
 e6ae40841db498b6e673877ac45ad208 UnityEngine.Networking.dll:UnityEngine.Networking.NetworkAnimator
 71bb6a6b6c8f052f948db64c7dd3ca4f UnityEngine.Networking.dll:UnityEngine.Networking.NetworkBehaviour
