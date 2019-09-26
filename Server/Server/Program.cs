@@ -60,7 +60,7 @@ namespace Server
             }
             catch (Exception e)
             {
-                Program.form.DebugTextBox.Text += "\r\n" + e.Message;
+                //Program.form.DebugTextBox.Text += "\r\n" + e.Message;
             }
         }
 
@@ -193,7 +193,7 @@ namespace Server
             //login
             if (c.clientName != null)
             {
-                Program.form.DebugTextBox.Text += "\r\nClient '" + c.clientName + "' sent command: " + data;
+                //Program.form.DebugTextBox.Text += "\r\nClient '" + c.clientName + "' sent command: " + data;
             }
             else
             {
@@ -268,19 +268,19 @@ namespace Server
                     {
                         if (u.unitID == id)
                         {
-                            Console.WriteLine(u.unitID+"");
-                            Console.WriteLine(parsedX + "");
-                            Console.WriteLine(parsedY + "");
+                           // Console.WriteLine(u.unitID+"");
+                           // Console.WriteLine(parsedX + "");
+                           // Console.WriteLine(parsedY + "");
                             u.unitPositionX = parsedX;
                             u.unitPositionY = parsedY;
                             
                         }
                     }
-                    Program.form.DebugTextBox.Text += "\r\n" + parsedX + "  " + parsedY;
+                    //Program.form.DebugTextBox.Text += "\r\n" + parsedX + "  " + parsedY;
                    
                     break;
                 default:
-                    Program.form.DebugTextBox.Text += "\r\nReceived unknown signal => skipping";
+                    //Program.form.DebugTextBox.Text += "\r\nReceived unknown signal => skipping";
                     break;
             }
         }
@@ -294,7 +294,7 @@ namespace Server
                 dataToSend += "|" + (u.unitID) + "|" + u.unitPositionX + "|" + u.unitPositionY;
             }
             Broadcast(dataToSend, c);
-            Program.form.DebugTextBox.Text += "\r\nSynchronization request sent: " + dataToSend;
+            //Program.form.DebugTextBox.Text += "\r\nSynchronization request sent: " + dataToSend;
         }
 
         //syncing all clients
@@ -306,7 +306,7 @@ namespace Server
                 dataToSend += "|" + (u.unitID) + "|" + u.unitPositionX + "|" + u.unitPositionY ;
             }
             Broadcast(dataToSend, clients);
-            Program.form.DebugTextBox.Text += "\r\nSynchronization request sent: " + dataToSend;
+           // Program.form.DebugTextBox.Text += "\r\nSynchronization request sent: " + dataToSend;
         }
     }
 
