@@ -26,6 +26,7 @@ namespace Assets.Modelo
         public InputField passwordInputField;
         private List<Unit> unitsOnMap = new List<Unit>();
         private Colide balon;
+        private int Goals;
         //private CultureInfo culture = (CultureInfo)CultureInfo.CurrentCulture.Clone();
 
 
@@ -34,6 +35,15 @@ namespace Assets.Modelo
         {
             DontDestroyOnLoad(gameObject);
             // culture.NumberFormat.NumberDecimalSeparator = ".";
+        }
+        public int ShowGoals()
+        {
+            return Goals;
+        }
+        public void AddGoal(int sum)
+        {
+            Goals += sum;
+            Send("Goal |" + this.Goals + "|");
         }
 
         public bool ConnectToServer(string host, int port)

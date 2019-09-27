@@ -305,6 +305,11 @@ namespace Server
                     }
 
                     break;
+                case "Goal":
+                    string GoalsAmount = aData[1];
+                    Broadcast("ChangeMarker|" + c.clientName + "|" + GoalsAmount, clients);
+
+                    break;
                 default:
                     //Program.form.DebugTextBox.Text += "\r\nReceived unknown signal => skipping";
                     break;

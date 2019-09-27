@@ -42,10 +42,14 @@ namespace Assets.Controlador
 
         public void Jugar()
         {
-            print("EEEEE");
+           // print("EEEEE");
             Cliente.Send("Jugar|");
             jugarButton.interactable = false;
 
+        }
+        public void GetGoals(bool gol)
+        {
+            Cliente.AddGoal(1);
         }
         //public void Send(float x, float y, int unitID)
         //{
