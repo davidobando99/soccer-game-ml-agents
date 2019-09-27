@@ -230,8 +230,8 @@ namespace Server
             switch (aData[0])
             {
                 case "SolicitudSincronizacion":
-                    SynchronizeUnits(c);
-                    SynchronizeBalon(c);
+                    SynchronizeUnits(c,aData[1]);
+                   // SynchronizeBalon(c);
                     break;
                 case "Jugar":
                     Unit unit = new Unit();
@@ -322,16 +322,7 @@ namespace Server
                     break;
 
 
-                //case "Tiempo":
-                //    foreach (ServerClient cliente in clients)
-                //    {
-                //        if (!cliente.clientName.Equals(aData[1]))
-                //        {
-                //            Broadcast("SincronizarTiempo|" + aData[2], clients);
-                //        }
-                //    }
-
-                //    break;
+                
 
                 default:
                     //Program.form.DebugTextBox.Text += "\r\nReceived unknown signal => skipping";
@@ -340,14 +331,21 @@ namespace Server
         }
 
         //Sincronizar un cliente
-        private void SynchronizeUnits(ServerClient c)
+        private void SynchronizeUnits(ServerClient c, string nameUnit)
         {
-            string dataToSend = "Sincronizando|" + units.Count;
-            foreach (Unit u in units)
+            if (nameUnit.Equals("balon"))
             {
-                dataToSend += "|" + (u.unitID) + "|" + u.unitPositionX + "|" + u.unitPositionY;
+                SynchronizeBalon(c);
             }
-            Broadcast(dataToSend, c);
+            else { 
+            string dataToSend = "Sincronizando|" + units.Count;
+                foreach (Unit u in units)
+                {
+                dataToSend += "|" + (u.unitID) + "|" + u.unitPositionX + "|" + u.unitPositionY;
+                }
+                Broadcast(dataToSend, c);
+            }
+            
             //Program.form.DebugTextBox.Text += "\r\nSynchronization request sent: " + dataToSend;
         }
         // Sincronizar balon

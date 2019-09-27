@@ -113,16 +113,8 @@ namespace Assets.Modelo
                     SceneManager.LoadScene("SampleScene");
                     break;
                 case "UnidadAgregada":
+                  
                     
-                    if (balon == null)
-                    {
-                        balon = new Colide();
-                        GameObject ball = Resources.Load("prefabs/Ball_opt") as GameObject;
-                        GameObject ins = Instantiate(ball);
-
-                        balon = ins.AddComponent<Colide>();
-                       // balon.transform.position = new Vector2(10, 5);
-                    }
                  
 
                     GameObject prefab = Resources.Load("prefabs/Player1") as GameObject;
@@ -143,6 +135,18 @@ namespace Assets.Modelo
                     int parsed;
                     Int32.TryParse(aData[2], out parsed);
                     un.unitID = parsed;
+                    if (unitsOnMap.Count == 2)
+                    {
+                        if (balon == null)
+                        {
+                            balon = new Colide();
+                            GameObject ball = Resources.Load("prefabs/Ball_opt") as GameObject;
+                            GameObject ins = Instantiate(ball);
+
+                            balon = ins.AddComponent<Colide>();
+                            // balon.transform.position = new Vector2(10, 5);
+                        }
+                    }
                     if (unitsOnMap.Count == 2)
                     {
                         if (timer == null)
@@ -197,15 +201,7 @@ namespace Assets.Modelo
                     break;
                 case "Sincronizando":
 
-                    if (aData[1].Equals("balon"))
-                    {
-                        float ballX = float.Parse(aData[2]);
-                        float ballY = float.Parse(aData[3]);
-                        balon.transform.position = new Vector2(ballX, ballY);
-
-                    }
-                    else
-                    {
+                   
                         int numberOfUnitsOnServersMap;
                         Int32.TryParse(aData[1], out numberOfUnitsOnServersMap);
                         int serverUnitID;
@@ -263,22 +259,18 @@ namespace Assets.Modelo
                                 unitsOnMap.Remove(unit);
                             }
                         }
-                    }
+                  
                     break;
                 case "ballMoved":
+
+                    if (!aData[1].Equals(clientName))
                     {
-                        if (aData[1].Equals(clientName))
-                        {
-                            return;
-                        }
-                        else
-                        {
-                            parsedX = float.Parse(aData[3]);
-                            parsedY = float.Parse(aData[4]);
-                            balon.transform.position = new Vector2(parsedX, parsedY);
-                        }
-                        
+                        parsedX = float.Parse(aData[3]);
+                        parsedY = float.Parse(aData[4]);
+                        balon.transform.position = new Vector2(parsedX, parsedY);
                     }
+                    
+                    
                     break;
                
                 

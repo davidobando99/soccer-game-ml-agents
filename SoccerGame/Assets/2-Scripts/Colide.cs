@@ -37,7 +37,7 @@ public class Colide : MonoBehaviour
         if (Input.GetKey(KeyCode.Mouse0) && Kick)
         {
             print("WTF");
-            Vector2 kick = new Vector2(moveX * 3f, moveY * 3f);
+            Vector2 kick = new Vector2(moveX * 5f, moveY * 5f);
             transform.Translate(kick);
             float NewmoveX = Mathf.Clamp(transform.position.x, 1, 16);
             float NewmoveY = Mathf.Clamp(transform.position.y, 1, 9);
