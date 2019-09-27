@@ -17,6 +17,7 @@ namespace Assets.Controlador
 
         public static Cliente Cliente;
         public Button jugarButton;
+        public string time;
 
         private void Awake()
         {
@@ -25,19 +26,19 @@ namespace Assets.Controlador
             GameObject go = GameObject.Find("Cliente");
             if (go == null)
             {
-                Debug.Log("Client object not found");
+                Debug.Log("GameObject cliente no encontrado");
                 SceneManager.LoadScene("ClientLogin");
                 return;
             }
             Cliente = go.GetComponent<Cliente>();
             if (Cliente == null)
             {
-                Debug.Log("Couldn't find client script");
+                Debug.Log("No se pudo encontrar el script");
                 return;
             }
 
             print("awakeee");
-            Cliente.Send("SynchronizeRequest|");
+            Cliente.Send("SolicitudSincronizacion|");
         }
 
         public void Jugar()

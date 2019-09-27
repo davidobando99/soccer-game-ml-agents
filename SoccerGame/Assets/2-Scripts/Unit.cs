@@ -69,9 +69,7 @@ public class Unit : MonoBehaviour
         Vector2 moveVector = new Vector2(moveX, moveY);
         transform.Translate(moveVector);
 
-        //float NewmoveX = Mathf.Clamp(transform.position.x, 1, 17);
-        //float NewmoveY = Mathf.Clamp(transform.position.y, 1, 9);
-        //transform.position = new Vector3(NewmoveX, NewmoveY);
+   
     }
 
 

@@ -13,7 +13,7 @@ namespace Assets.Modelo
 {
     class Cliente : MonoBehaviour
     {
-        private string clientName;
+        public string clientName;
         private int portToConnect = 6321;
         private string password;
         private bool socketReady;
@@ -26,15 +26,16 @@ namespace Assets.Modelo
         public InputField passwordInputField;
         private List<Unit> unitsOnMap = new List<Unit>();
         private Colide balon;
+        private Timer timer;
         private int Goals;
-        //private CultureInfo culture = (CultureInfo)CultureInfo.CurrentCulture.Clone();
+       
 
 
 
         private void Start()
         {
             DontDestroyOnLoad(gameObject);
-            // culture.NumberFormat.NumberDecimalSeparator = ".";
+          
         }
         public int ShowGoals()
         {
@@ -45,7 +46,7 @@ namespace Assets.Modelo
             Goals += sum;
             Send("Goal |" + this.Goals + "|");
         }
-
+        //Conectar cliente al servidor
         public bool ConnectToServer(string host, int port)
         {
             if (socketReady)
@@ -69,6 +70,7 @@ namespace Assets.Modelo
             return socketReady;
         }
 
+        //Hilo cliente 
         private void Update()
         {
 
@@ -85,7 +87,7 @@ namespace Assets.Modelo
             }
         }
 
-        // Sending message to the server
+        //Enviar mensaje al servidor
         public void Send(string data)
         {
             if (!socketReady)
@@ -95,22 +97,23 @@ namespace Assets.Modelo
             writer.Flush();
         }
 
-        // Read messages from the server
+        // Leer mensajes del servidor
         private void OnIncomingData(string data)
         {
             string[] aData = data.Split('|');
-            Debug.Log("Received from server: " + data);
+            Debug.Log("Recibido desde el servidor: " + data);
 
             switch (aData[0])
             {
-                case "WhoAreYou":
-                    Send("Iam|" + clientName + "|" + password);
+                case "QuienEres":
+                    Send("YoSoy|" + clientName + "|" + password);
                     break;
-                case "Authenticated":
+                case "Autenticado":
                     
                     SceneManager.LoadScene("SampleScene");
                     break;
-                case "UnitSpawned":
+                case "UnidadAgregada":
+                    
                     if (balon == null)
                     {
                         balon = new Colide();
@@ -118,11 +121,11 @@ namespace Assets.Modelo
                         GameObject ins = Instantiate(ball);
 
                         balon = ins.AddComponent<Colide>();
-                        balon.transform.position = new Vector2(10, 5);
+                       // balon.transform.position = new Vector2(10, 5);
                     }
-                  
+                 
 
-                    GameObject prefab = Resources.Load("prefabs/Player3") as GameObject;
+                    GameObject prefab = Resources.Load("prefabs/Player1") as GameObject;
                     GameObject go = Instantiate(prefab);
 
                     float parsedX = float.Parse(aData[3]);
@@ -140,14 +143,36 @@ namespace Assets.Modelo
                     int parsed;
                     Int32.TryParse(aData[2], out parsed);
                     un.unitID = parsed;
+                    if (unitsOnMap.Count == 2)
+                    {
+                        if (timer == null)
+                        {
+                            timer = new Timer();
+                            GameObject time = GameObject.Find("Tiempo");
+                            timer = time.AddComponent<Timer>();
+                            timer.tiempoText = time.GetComponent<Text>();
 
+                            //timer.tiempoText.text = "00:" + timer.tiempo.ToString("f0");
+
+
+
+                        }
+                    }
                     if (aData[1].Equals(clientName))
                     {
                         un.clientName = clientName;
                     }
 
+
+                    
+
+
+
+
+
+
                     break;
-                case "UnitMoved":
+                case "UnidadMovida":
                     if (aData[1] == clientName)
                     {
                         return;
@@ -170,7 +195,7 @@ namespace Assets.Modelo
                         }
                     }
                     break;
-                case "Synchronizing":
+                case "Sincronizando":
 
                     if (aData[1].Equals("balon"))
                     {
@@ -206,7 +231,7 @@ namespace Assets.Modelo
                             }
                             if (!didFind) //add non-existing (at client) units
                             {
-                                prefab = Resources.Load("prefabs/Player3") as GameObject;
+                                prefab = Resources.Load("prefabs/Player1") as GameObject;
                                 go = Instantiate(prefab);
                                 un = go.AddComponent<Unit>();
                                 unitsOnMap.Add(un);
@@ -242,15 +267,27 @@ namespace Assets.Modelo
                     break;
                 case "ballMoved":
                     {
-                        parsedX = float.Parse(aData[3]);
-                        parsedY = float.Parse(aData[4]);
-                        balon.transform.position = new Vector2(parsedX, parsedY);
+                        if (aData[1].Equals(clientName))
+                        {
+                            return;
+                        }
+                        else
+                        {
+                            parsedX = float.Parse(aData[3]);
+                            parsedY = float.Parse(aData[4]);
+                            balon.transform.position = new Vector2(parsedX, parsedY);
+                        }
+                        
                     }
                     break;
-                    
+               
+                
+                //case "SincronizarTiempo":
+                //    timer.tiempoText.text = aData[1];
+                //    break;
 
                 default:
-                    Debug.Log("Unrecognizable command received");
+                    Debug.Log("Comando recibido erroneo");
                     break;
             }
         }

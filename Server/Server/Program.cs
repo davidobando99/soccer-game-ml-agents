@@ -21,10 +21,6 @@ namespace Server
         static void Main()
         {
 
-            //use points for floats for easy compatibility with coordinates
-            //CultureInfo customCulture = (CultureInfo)System.Threading.Thread.CurrentThread.CurrentCulture.Clone();
-            //customCulture.NumberFormat.NumberDecimalSeparator = ".";
-            //System.Threading.Thread.CurrentThread.CurrentCulture = customCulture;
 
             server = new ServerAction();
 
@@ -48,6 +44,7 @@ namespace Server
         private List<Unit> units = new List<Unit>();
         private bool ResyncNeeded = false;
         private Ball balon = new Ball();
+        public string time;
 
         //the constructor, adds the listener
         public ServerAction()
@@ -66,8 +63,8 @@ namespace Server
         }
 
 
-        //called at every fixed time intervals => time can be adjusted at timer component's property
-        //used to check if there's incoming data
+        //Hilo del servidor 
+        //Run del huilo para saber si hay informacion llegando del (los) cliente(s)
         public void Update()
         {
             if (!serverStarted)
@@ -75,7 +72,7 @@ namespace Server
 
             foreach (ServerClient c in clients)
             {
-                // Is the client still connected?
+                
                 if (!IsConnected(c.tcp))
                 {
                     c.tcp.Close();
@@ -96,7 +93,7 @@ namespace Server
                 }
             }
 
-            //checking disconnected players
+            //jugadores desconectados
             for (int i = 0; i < disconnectList.Count - 1; i++)
             {
                 for (int j = 0; j < units.Count; j++)
@@ -106,24 +103,24 @@ namespace Server
                         units.RemoveAt(j);
                     }
                 }
-                Program.form.DebugTextBox.Text += "\r\nUser disconnected:" + disconnectList[i].clientName;
+                Program.form.DebugTextBox.Text += "\r\nUsuario desconectado:" + disconnectList[i].clientName;
                 clients.Remove(disconnectList[i]);
                 disconnectList.RemoveAt(i);
                 ResyncNeeded = true;
             }
-            //if some1 disconnected, tell it to other players as well.
+            //sincronizar jugadores cuando uno esta desconectado
             if (ResyncNeeded)
             {
                 SynchronizeUnits();
                 ResyncNeeded = false;
             }
         }
-
+        //Empezar a escuchar al cliente despues de aceptarlo
         private void StartListening()
         {
             server.BeginAcceptTcpClient(AcceptTcpClient, server);
         }
-
+        //Aceptar un cliente y agregarlo a la lista de clientes conectados
         private void AcceptTcpClient(IAsyncResult ar)
         {
             TcpListener listener = (TcpListener)ar.AsyncState;
@@ -139,7 +136,7 @@ namespace Server
 
             StartListening();
             //request authentication from client
-            Broadcast("WhoAreYou|", clients[clients.Count - 1]);
+            Broadcast("QuienEres|", clients[clients.Count - 1]);
         }
 
         private bool IsConnected(TcpClient c)
@@ -162,7 +159,7 @@ namespace Server
             }
         }
 
-        // Server Send
+        //Enviar mensaje a los clientes conectados 
         private void Broadcast(string data, List<ServerClient> cl)
         {
             foreach (ServerClient sc in cl)
@@ -186,7 +183,7 @@ namespace Server
             Broadcast(data, sc);
         }
 
-        // Server Read
+        // Leer informacion que llega al servidor
         private void OnIncomingData(ServerClient c, string data)
         {
             string[] aData = data.Split('|');
@@ -198,8 +195,8 @@ namespace Server
             }
             else
             {
-                Program.form.DebugTextBox.Text += "\r\nNew Client trying to join server. Requesting authentication.";
-                if (aData[0] == "Iam")
+                Program.form.DebugTextBox.Text += "\r\nNuevo cliente tratando de unirse al servidor. Solicitud autenticacion.";
+                if (aData[0] == "YoSoy")
                 {
                     bool authenticated = Database.AuthenticateUser(aData[1], aData[2]);
                     if (authenticated)
@@ -208,19 +205,19 @@ namespace Server
                         {
                             if (aData[1] == client.clientName)
                             {
-                                Program.form.DebugTextBox.Text += "\r\nThis user is already connected";
+                                Program.form.DebugTextBox.Text += "\r\nEste usuario ya esta conectado";
                                 c.tcp.Close();
                                 disconnectList.Add(c);
                                 return;
                             }
                         }
                         c.clientName = aData[1];
-                        Program.form.DebugTextBox.Text += "\r\nUser authenticated";
-                        Broadcast("Authenticated|", c);
+                        Program.form.DebugTextBox.Text += "\r\nUsuario Autenticado";
+                        Broadcast("Autenticado|", c);
                     }
                     else
                     {
-                        Program.form.DebugTextBox.Text += "\r\nUser authentication failed, client disconnected.";
+                        Program.form.DebugTextBox.Text += "\r\nAuntenticacion de usuario fallida. ";
                         c.tcp.Close();
                         disconnectList.Add(c);
                     }
@@ -232,7 +229,7 @@ namespace Server
             //gameplay commands
             switch (aData[0])
             {
-                case "SynchronizeRequest":
+                case "SolicitudSincronizacion":
                     SynchronizeUnits(c);
                     SynchronizeBalon(c);
                     break;
@@ -254,11 +251,24 @@ namespace Server
                     }
 
                     unit.unitID = newid;
-                    unit.unitPositionX = 1.5f;
-                    unit.unitPositionY = 1.5f;
+                   
+
+                   
 
                     units.Add(unit);
-                    Broadcast("UnitSpawned|" + c.clientName + "|" + unit.unitID + "|" + unit.unitPositionX + "|" + unit.unitPositionY, clients);
+                    if (units.Count == 1)
+                    {
+                        unit.unitPositionX = 3.37f;
+                        unit.unitPositionY = 5.5f;
+                    }
+                    else if (units.Count == 2)
+                    {
+                        unit.unitPositionX = 14.68f;
+                        unit.unitPositionY = 5.5f;
+                    }
+                        Broadcast("UnidadAgregada|" + c.clientName + "|" + unit.unitID + "|" + unit.unitPositionX + "|" + unit.unitPositionY, clients);
+                   
+                    
                     break;
                 case "Moving":
                     
@@ -278,7 +288,7 @@ namespace Server
                     }
                     else
                     {
-                        Broadcast("UnitMoved|" + c.clientName + "|" + aData[1] + "|" + aData[2] + "|" + aData[3], clients);
+                        Broadcast("UnidadMovida|" + c.clientName + "|" + aData[1] + "|" + aData[2] + "|" + aData[3], clients);
                         int id;
                         Int32.TryParse(aData[1], out id);
                         float parsedX;
@@ -310,16 +320,29 @@ namespace Server
                     Broadcast("ChangeMarker|" + c.clientName + "|" + GoalsAmount, clients);
 
                     break;
+
+
+                //case "Tiempo":
+                //    foreach (ServerClient cliente in clients)
+                //    {
+                //        if (!cliente.clientName.Equals(aData[1]))
+                //        {
+                //            Broadcast("SincronizarTiempo|" + aData[2], clients);
+                //        }
+                //    }
+
+                //    break;
+
                 default:
                     //Program.form.DebugTextBox.Text += "\r\nReceived unknown signal => skipping";
                     break;
             }
         }
 
-        //syncing 1 client
+        //Sincronizar un cliente
         private void SynchronizeUnits(ServerClient c)
         {
-            string dataToSend = "Synchronizing|" + units.Count;
+            string dataToSend = "Sincronizando|" + units.Count;
             foreach (Unit u in units)
             {
                 dataToSend += "|" + (u.unitID) + "|" + u.unitPositionX + "|" + u.unitPositionY;
@@ -327,20 +350,20 @@ namespace Server
             Broadcast(dataToSend, c);
             //Program.form.DebugTextBox.Text += "\r\nSynchronization request sent: " + dataToSend;
         }
-
+        // Sincronizar balon
         private void SynchronizeBalon(ServerClient c)
         {
-            string dataToSend = "Synchronizing|"
+            string dataToSend = "Sincronizando|"
 
-               +"balon|" +balon.ballPositionX + "|" + balon.ballPositionY;
+               + "balon|" +balon.ballPositionX + "|" + balon.ballPositionY;
             
             Broadcast(dataToSend, c);
         }
 
-        //syncing all clients
+        //Sincronizar todos los clientes
         private void SynchronizeUnits()
         {
-            string dataToSend = "Synchronizing|" + units.Count;
+            string dataToSend = "Sincronizando|" + units.Count;
             foreach (Unit u in units)
             {
                 dataToSend += "|" + (u.unitID) + "|" + u.unitPositionX + "|" + u.unitPositionY;
@@ -369,7 +392,7 @@ namespace Server
         public float unitPositionY;
 
     }
-
+    
     public class Ball
     {
 

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Assets.Controlador;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,12 +10,12 @@ public class Timer : MonoBehaviour
     public Text tiempoText;
     public float tiempo = 59f;
 
-    public void Start()
-    {
+    //public void Start()
+    //{
 
-        tiempoText.text = "00:" + tiempo.ToString("f0");
+    //    tiempoText.text = "00:" + tiempo.ToString("f0");
 
-    }
+    //}
 
 
     public void Update()
@@ -35,7 +36,7 @@ public class Timer : MonoBehaviour
                 tiempoText.text = "00:00";
 
             }
-
+            //ControladorCliente.Cliente.Send("Tiempo|" + ControladorCliente.Cliente.clientName+"|"+tiempoText.text);
         }
 
     }
