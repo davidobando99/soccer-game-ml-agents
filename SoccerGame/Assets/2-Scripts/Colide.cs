@@ -6,13 +6,24 @@ using UnityEngine.UI;
 
 public class Colide : MonoBehaviour
 {
-    private bool Kick = false;
+    private bool Kick;
     public string name = "balon";
-    public Text Texto;
-    public Text Texto2;
-    private int num = 0;
+    public Text Text;
+    public Text Text2;
+    private int num1;
+    private int num2;
     private ControladorCliente cc;
     // Start is called before the first frame update
+    void Start()
+    {
+        cc = new ControladorCliente();
+        num1 = 0;
+        num2 = 0;
+        Kick = false;
+        Text = GameObject.Find("Text1").GetComponent<Text>();
+        Text2 = GameObject.Find("Text2").GetComponent<Text>();
+
+    }
     void OnCollisionEnter2D(Collision2D collision)
     {
         print("OnCollisionEnter");
@@ -62,17 +73,32 @@ public class Colide : MonoBehaviour
 
         if (transform.position.x >= 16 && transform.position.y >= 3 && transform.position.y <= 7)
         {
-            print("Verificar el marcador");
-            num++;
-            Texto.text = num + "";
+            //print(" ANTES X " + transform.position.x + " Y " + transform.position.y);
+            //print("Verificar el marcador");
+            num1++;
+            Text2.text = num1 + "";
+
             Vector2 centerField = new Vector2(9, 5);
-            Quaternion centerField2 = new Quaternion();
-            transform.SetPositionAndRotation(centerField, centerField2);
-            cc.GetGoals(true);
+            //Quaternion centerField2 = new Quaternion();
+            transform.position = centerField;
+            print(" DESPUES X " + transform.position.x + " Y " + transform.position.y);
+
+             cc.SetGoals(true);
+
 
 
 
         }
+        else if (transform.position.x <= 2.37 && transform.position.y <= 6.78 && transform.position.y >= 4.14)
+        {
+            print("Verificar el marcador2");
+            num2++;
+            Text.text = num2 + "";
+            Vector2 centerField = new Vector2(9, 5);
+            transform.position = centerField;
+            cc.SetGoals(true);
+        }
+
 
     }
 

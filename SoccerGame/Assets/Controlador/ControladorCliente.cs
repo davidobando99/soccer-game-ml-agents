@@ -48,7 +48,7 @@ namespace Assets.Controlador
             jugarButton.interactable = false;
 
         }
-        public void GetGoals(bool gol)
+        public void SetGoals(bool gol)
         {
             Cliente.AddGoal(1);
         }
