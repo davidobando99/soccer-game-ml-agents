@@ -117,7 +117,7 @@ d251bf88db6c95a6b1aa0b69298da9ef UnityEngine.SpatialTracking.dll:UnityEngine.Spa
 ef185707e1f54ce3414fa3734b4055b1 Assembly-CSharp.dll:Assets.Modelo.Cliente
 303ad70ce203ad874efe2965d0fbcff9 Unity.Analytics.Tracker.dll:UnityEngine.Analytics.AnalyticsEventTracker
 7fb9de8dcf73854b6b328eca1f7a6e6d Unity.Analytics.Tracker.dll:UnityEngine.Analytics.AnalyticsTracker
-71bb6a6b6c8f052f948db64c7dd3ca4f Assembly-CSharp.dll:.Colide
+1df5043f0424ac97346ea8f965958921 Assembly-CSharp.dll:.Colide
 b8a5e8091ab0b8861d2add371082c5e0 Unity.TextMeshPro.dll:TMPro.TMP_SpriteAsset
 cfcff58193432939670fb1d1debc9d87 Assembly-CSharp.dll:.RotateAround
 b3ab2106268377ffe25dd18ac23dca28 Unity.TextMeshPro.dll:TMPro.TMP_Asset

@@ -47,6 +47,7 @@ namespace Server
         private bool serverStarted;
         private List<Unit> units = new List<Unit>();
         private bool ResyncNeeded = false;
+        private Ball balon = new Ball();
 
         //the constructor, adds the listener
         public ServerAction()
@@ -233,11 +234,13 @@ namespace Server
             {
                 case "SynchronizeRequest":
                     SynchronizeUnits(c);
+                    SynchronizeBalon(c);
                     break;
                 case "Jugar":
                     Unit unit = new Unit();
-
+                   
                     unit.clientName = c.clientName;
+                    
                     //give a new ID to the new units
                     int newid = 0;
                     //if (c.clientName.Equals("admin")) newid = 0;
@@ -258,28 +261,48 @@ namespace Server
                     Broadcast("UnitSpawned|" + c.clientName + "|" + unit.unitID + "|" + unit.unitPositionX + "|" + unit.unitPositionY, clients);
                     break;
                 case "Moving":
-                    Broadcast("UnitMoved|" + c.clientName + "|" + aData[1] + "|" + aData[2] + "|" + aData[3], clients);
-                    int id;
-                    Int32.TryParse(aData[1], out id);
-                    float parsedX;
-                    float parsedY;
-
-                    float.TryParse(aData[2], out parsedX);
-                    float.TryParse(aData[3], out parsedY);
-
-                    foreach (Unit u in units)
+                    
+                    if (aData[1].Equals("balon"))
                     {
-                        if (u.unitID == id)
-                        {
-                            // Console.WriteLine(u.unitID+"");
-                            // Console.WriteLine(parsedX + "");
-                            // Console.WriteLine(parsedY + "");
-                            u.unitPositionX = parsedX;
-                            u.unitPositionY = parsedY;
+                        Broadcast("ballMoved|" + c.clientName + "|" + aData[1] + "|" + aData[2] + "|" + aData[3], clients);
+                        int ball;
+                        Int32.TryParse(aData[1], out ball);
+                        float X;
+                        float Y;
 
-                        }
+                        float.TryParse(aData[2], out X);
+                        float.TryParse(aData[3], out Y);
+                        balon.ballPositionX = X;
+                        balon.ballPositionY = Y;
+                        balon.clientName = c.clientName;
                     }
-                    //Program.form.DebugTextBox.Text += "\r\n" + parsedX + "  " + parsedY;
+                    else
+                    {
+                        Broadcast("UnitMoved|" + c.clientName + "|" + aData[1] + "|" + aData[2] + "|" + aData[3], clients);
+                        int id;
+                        Int32.TryParse(aData[1], out id);
+                        float parsedX;
+                        float parsedY;
+
+                        float.TryParse(aData[2], out parsedX);
+                        float.TryParse(aData[3], out parsedY);
+
+                        foreach (Unit u in units)
+                        {
+                            if (u.unitID == id)
+                            {
+                                // Console.WriteLine(u.unitID+"");
+                                // Console.WriteLine(parsedX + "");
+                                // Console.WriteLine(parsedY + "");
+                                u.unitPositionX = parsedX;
+                                u.unitPositionY = parsedY;
+
+                            }
+                        }
+
+                        //Program.form.DebugTextBox.Text += "\r\n" + parsedX + "  " + parsedY;
+
+                    }
 
                     break;
                 default:
@@ -298,6 +321,15 @@ namespace Server
             }
             Broadcast(dataToSend, c);
             //Program.form.DebugTextBox.Text += "\r\nSynchronization request sent: " + dataToSend;
+        }
+
+        private void SynchronizeBalon(ServerClient c)
+        {
+            string dataToSend = "Synchronizing|"
+
+               +"balon|" +balon.ballPositionX + "|" + balon.ballPositionY;
+            
+            Broadcast(dataToSend, c);
         }
 
         //syncing all clients
@@ -333,6 +365,15 @@ namespace Server
 
     }
 
+    public class Ball
+    {
+
+        public string clientName;
+        public int ballID;
+        public float ballPositionX;
+        public float ballPositionY;
+    }
+
     //NOTE: never store sensitive user data like passwords like this in an actual product. use something like hashing... 
     public static class Database
     {
@@ -346,5 +387,7 @@ namespace Server
             }
             else return false;
         }
+
+       
     }
 }

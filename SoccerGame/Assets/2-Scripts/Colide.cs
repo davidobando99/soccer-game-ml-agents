@@ -1,10 +1,12 @@
-﻿using System.Collections;
+﻿using Assets.Controlador;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Colide : MonoBehaviour
 {
     private bool Kick = false;
+    public string name = "balon";
     // Start is called before the first frame update
      void OnCollisionEnter2D(Collision2D collision)
     {
@@ -24,6 +26,7 @@ public class Colide : MonoBehaviour
             float NewmoveX = Mathf.Clamp(transform.position.x, 1, 16);
             float NewmoveY = Mathf.Clamp(transform.position.y, 1, 9);
             transform.position = new Vector3(NewmoveX, NewmoveY);
+            ControladorCliente.Cliente.Send("Moving|" + "balon" + "|" + transform.position.x + "|" + transform.position.y);
             Kick = false;
         }
 
@@ -37,7 +40,7 @@ public class Colide : MonoBehaviour
         float moveX = Input.GetAxis("Horizontal");
         float moveY = Input.GetAxis("Vertical");
 
-        Vector2 moveVector = new Vector2(moveX*0.2f , moveY*0.2f);
+        Vector2 moveVector = new Vector2(moveX*0.5f , moveY*0.5f);
         transform.Translate(moveVector);
 
         Kick = true;
@@ -45,13 +48,13 @@ public class Colide : MonoBehaviour
         float  NewmoveX= Mathf.Clamp(transform.position.x,1,16);
         float NewmoveY = Mathf.Clamp(transform.position.y, 1, 9);
         transform.position = new Vector3(NewmoveX, NewmoveY);
-
+        ControladorCliente.Cliente.Send("Moving|" + "balon" + "|" + transform.position.x + "|" + transform.position.y);
         if (transform.position.x >= 16 && transform.position.y >=3 && transform.position.y <= 7) { 
         
             Vector2 centerField = new Vector2(9, 5);
             Quaternion centerField2 = new Quaternion();
             transform.SetPositionAndRotation(centerField,centerField2);
-
+            ControladorCliente.Cliente.Send("Moving|" + "balon" + "|" + transform.position.x + "|" + transform.position.y);
         }
 
 

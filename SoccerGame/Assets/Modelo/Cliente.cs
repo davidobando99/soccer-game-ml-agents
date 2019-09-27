@@ -25,6 +25,7 @@ namespace Assets.Modelo
         public InputField serverAddressInputField;
         public InputField passwordInputField;
         private List<Unit> unitsOnMap = new List<Unit>();
+        private Colide balon;
         //private CultureInfo culture = (CultureInfo)CultureInfo.CurrentCulture.Clone();
 
 
@@ -96,9 +97,21 @@ namespace Assets.Modelo
                     Send("Iam|" + clientName + "|" + password);
                     break;
                 case "Authenticated":
+                    
                     SceneManager.LoadScene("SampleScene");
                     break;
                 case "UnitSpawned":
+                    if (balon == null)
+                    {
+                        balon = new Colide();
+                        GameObject ball = Resources.Load("prefabs/Ball_opt") as GameObject;
+                        GameObject ins = Instantiate(ball);
+
+                        balon = ins.AddComponent<Colide>();
+                        balon.transform.position = new Vector2(10, 5);
+                    }
+                  
+
                     GameObject prefab = Resources.Load("prefabs/Player3") as GameObject;
                     GameObject go = Instantiate(prefab);
 
@@ -107,6 +120,10 @@ namespace Assets.Modelo
 
 
                     go.transform.position = new Vector2(parsedX, parsedY);
+                    
+                        
+                    
+                   
                     Unit un = go.AddComponent<Unit>();
 
                     unitsOnMap.Add(un);
@@ -136,72 +153,92 @@ namespace Assets.Modelo
                             {
                                 parsedX = float.Parse(aData[3]);
                                 parsedY = float.Parse(aData[4]);
-
                                 unit.transform.position = new Vector2(parsedX, parsedY);
+                               
+                                
                             }
                         }
                     }
                     break;
                 case "Synchronizing":
 
-
-                    int numberOfUnitsOnServersMap;
-                    Int32.TryParse(aData[1], out numberOfUnitsOnServersMap);
-                    int serverUnitID;
-                    int[] serverUnitIDs = new int[numberOfUnitsOnServersMap];
-
-                    for (int i = 0; i < numberOfUnitsOnServersMap; i++)
+                    if (aData[1].Equals("balon"))
                     {
+                        float ballX = float.Parse(aData[2]);
+                        float ballY = float.Parse(aData[3]);
+                        balon.transform.position = new Vector2(ballX, ballY);
 
-                        Int32.TryParse(aData[2 + i * 3], out serverUnitID);
-                        serverUnitIDs[i] = serverUnitID;
-                        bool didFind = false;
-                        print("cantidad units cliente  " + unitsOnMap.Count);
-                        foreach (Unit unit in unitsOnMap) //synchronize existing units
+                    }
+                    else
+                    {
+                        int numberOfUnitsOnServersMap;
+                        Int32.TryParse(aData[1], out numberOfUnitsOnServersMap);
+                        int serverUnitID;
+                        int[] serverUnitIDs = new int[numberOfUnitsOnServersMap];
+
+                        for (int i = 0; i < numberOfUnitsOnServersMap; i++)
                         {
-                            if (unit.unitID == serverUnitID)
+
+                            Int32.TryParse(aData[2 + i * 3], out serverUnitID);
+                            serverUnitIDs[i] = serverUnitID;
+                            bool didFind = false;
+                            print("cantidad units cliente  " + unitsOnMap.Count);
+                            foreach (Unit unit in unitsOnMap) //synchronize existing units
                             {
+                                if (unit.unitID == serverUnitID)
+                                {
+                                    parsedX = float.Parse(aData[3 + i * 3]);
+                                    parsedY = float.Parse(aData[4 + i * 3]);
+
+                                    unit.MoveTo(parsedX, parsedY);
+                                    didFind = true;
+                                }
+                            }
+                            if (!didFind) //add non-existing (at client) units
+                            {
+                                prefab = Resources.Load("prefabs/Player3") as GameObject;
+                                go = Instantiate(prefab);
+                                un = go.AddComponent<Unit>();
+                                unitsOnMap.Add(un);
+                                un.unitID = serverUnitID;
                                 parsedX = float.Parse(aData[3 + i * 3]);
                                 parsedY = float.Parse(aData[4 + i * 3]);
+                                go.transform.position = new Vector2(parsedX, parsedY);
 
-                                unit.MoveTo(parsedX, parsedY);
-                                didFind = true;
+
+
                             }
                         }
-                        if (!didFind) //add non-existing (at client) units
+
+
+                        //remove units which are not on server's list (like disconnected ones)
+                        foreach (Unit unit in unitsOnMap)
                         {
-                            prefab = Resources.Load("prefabs/Player2") as GameObject;
-                            go = Instantiate(prefab);
-                            un = go.AddComponent<Unit>();
-                            unitsOnMap.Add(un);
-                            un.unitID = serverUnitID;
-                            parsedX = float.Parse(aData[3 + i * 3]);
-                            parsedY = float.Parse(aData[4 + i * 3]);
-                            go.transform.position = new Vector2(parsedX, parsedY);
-
-
-                        }
-                    }
-
-
-                    //remove units which are not on server's list (like disconnected ones)
-                    foreach (Unit unit in unitsOnMap)
-                    {
-                        bool exists = false;
-                        for (int i = 0; i < serverUnitIDs.Length; i++)
-                        {
-                            if (unit.unitID == serverUnitIDs[i])
+                            bool exists = false;
+                            for (int i = 0; i < serverUnitIDs.Length; i++)
                             {
-                                exists = true;
+                                if (unit.unitID == serverUnitIDs[i])
+                                {
+                                    exists = true;
+                                }
                             }
-                        }
-                        if (!exists)
-                        {
-                            Destroy(unit.gameObject);
-                            unitsOnMap.Remove(unit);
+                            if (!exists)
+                            {
+                                Destroy(unit.gameObject);
+                                unitsOnMap.Remove(unit);
+                            }
                         }
                     }
                     break;
+                case "ballMoved":
+                    {
+                        parsedX = float.Parse(aData[3]);
+                        parsedY = float.Parse(aData[4]);
+                        balon.transform.position = new Vector2(parsedX, parsedY);
+                    }
+                    break;
+                    
+
                 default:
                     Debug.Log("Unrecognizable command received");
                     break;
