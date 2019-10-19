@@ -1,6 +1,6 @@
 Win64
 PlayerPath?
-C:/Users/Laura/git/SoccerGame/SoccerGame.exe
+C:/Users/David Obando/Repos/SoccerGame/SoccerGame.exe
 SceneListBegin?
 Assets/1- Scene/ClientLogin.unity
 Assets/1- Scene/SampleScene.unity

@@ -198,8 +198,20 @@ namespace Server
                 Program.form.DebugTextBox.Text += "\r\nNuevo cliente tratando de unirse al servidor. Solicitud autenticacion.";
                 if (aData[0] == "YoSoy")
                 {
+
                     bool authenticated = Database.AuthenticateUser(aData[1], aData[2]);
-                    if (authenticated)
+                    if (!authenticated)
+                    {
+                        if (!Database.existUser(aData[1]))
+                        {
+                            Database.addUser(aData[1], aData[2]);
+                            c.clientName = aData[1];
+                            Program.form.DebugTextBox.Text += "\r\nUsuario Autenticado";
+                            Broadcast("Autenticado|", c);
+                        }
+                        
+                    }
+                    else if (authenticated)
                     {
                         foreach (ServerClient client in clients)
                         {
@@ -414,6 +426,26 @@ namespace Server
             else return false;
         }
 
-       
+        public static void addUser(string username, string password)
+        {
+            Program.form.usersTableAdapter.InsertUser(username, password);
+            
+        }
+        public static void users()
+        {
+            Program.form.usersTableAdapter.GetData();
+        }
+        public static int getId(string username)
+        {
+            
+           return Program.form.usersTableAdapter.GetData().First(i => i.Name.Equals(username)).Id;
+        }
+
+        public static bool existUser(string username)
+        {
+            return Program.form.usersTableAdapter.GetData().Where(i => i.Name.Equals(username)).Any();
+        }
+
+
     }
 }
