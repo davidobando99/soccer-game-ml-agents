@@ -11,6 +11,7 @@ public class Unit : MonoBehaviour
     public int unitID;
     public bool isPlayersUnit;
     public string clientName;
+    public int clientId;
 
     // Start is called before the first frame update
 
@@ -30,6 +31,7 @@ public class Unit : MonoBehaviour
         {
             if (clientName.Equals("admin"))
             {
+                print(clientId);
                 float moveX = Input.GetAxis("Horizontal");
                 float moveY = Input.GetAxis("Vertical");
                 Vector2 moveVector = new Vector2(moveX * 5f * Time.deltaTime, moveY * 5f * Time.deltaTime);

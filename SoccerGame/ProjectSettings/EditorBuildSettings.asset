@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/1- Scene/SampleScene.unity
     guid: b2c19c11f68da4049ad82b1076316882
+  - enabled: 1
+    path: Assets/1- Scene/halfTime.unity
+    guid: fae149cbe7808ae46a588be02dd99019
   m_configObjects: {}

@@ -206,6 +206,7 @@ namespace Server
                         {
                             Database.addUser(aData[1], aData[2]);
                             c.clientName = aData[1];
+                            c.id = Database.getId(aData[1]);
                             Program.form.DebugTextBox.Text += "\r\nUsuario Autenticado";
                             Broadcast("Autenticado|", c);
                         }
@@ -224,6 +225,7 @@ namespace Server
                             }
                         }
                         c.clientName = aData[1];
+                        c.id = Database.getId(aData[1]);
                         Program.form.DebugTextBox.Text += "\r\nUsuario Autenticado";
                         Broadcast("Autenticado|", c);
                     }
@@ -249,23 +251,23 @@ namespace Server
                     Unit unit = new Unit();
                    
                     unit.clientName = c.clientName;
-                    
+                    unit.clientId = c.id;
                     //give a new ID to the new units
                     int newid = 0;
-                    //if (c.clientName.Equals("admin")) newid = 0;
-                    //else newid = 1;
+                    //if (c.id%2!=0) unit.unitID = 0;
+                    //else unit.unitID = 1;
                     foreach (Unit u in units)
                     {
                         if (u.unitID >= newid) { newid = u.unitID + 1; }
-
-
-
+                        
                     }
 
                     unit.unitID = newid;
-                   
 
-                   
+
+
+
+
 
                     units.Add(unit);
                     if (units.Count == 1)
@@ -278,7 +280,7 @@ namespace Server
                         unit.unitPositionX = 14.68f;
                         unit.unitPositionY = 5.5f;
                     }
-                        Broadcast("UnidadAgregada|" + c.clientName + "|" + unit.unitID + "|" + unit.unitPositionX + "|" + unit.unitPositionY, clients);
+                        Broadcast("UnidadAgregada|" + c.clientName + "|" + unit.unitID + "|" + unit.unitPositionX + "|" + unit.unitPositionY + "|" + c.id, clients );
                    
                     
                     break;
@@ -387,6 +389,7 @@ namespace Server
     public class ServerClient
     {
         public string clientName;
+        public int id;
         public TcpClient tcp;
         public ServerClient(TcpClient tcp)
         {
@@ -397,6 +400,7 @@ namespace Server
     public class Unit
     {
         public string clientName;
+        public int clientId;
         public int unitID;
         public float unitPositionX;
         public float unitPositionY;

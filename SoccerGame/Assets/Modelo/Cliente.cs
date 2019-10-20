@@ -16,6 +16,7 @@ namespace Assets.Modelo
         public string clientName;
         private int portToConnect = 6321;
         private string password;
+        public int id;
         private bool socketReady;
         private TcpClient socket;
         private NetworkStream stream;
@@ -122,8 +123,8 @@ namespace Assets.Modelo
 
                     float parsedX = float.Parse(aData[3]);
                     float parsedY = float.Parse(aData[4]);
-
-
+                    int clientId = Int32.Parse(aData[5]);
+                    id = clientId;
                     go.transform.position = new Vector2(parsedX, parsedY);
                     
                         
@@ -161,13 +162,16 @@ namespace Assets.Modelo
 
 
                         }
+                        
+                      
                     }
                     if (aData[1].Equals(clientName))
                     {
                         un.clientName = clientName;
+                        un.clientId = id;
                     }
 
-
+                
                     
 
 
