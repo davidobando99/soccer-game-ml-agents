@@ -1,18 +1,25 @@
 ﻿using Assets.Controlador;
+using Assets.Modelo;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEngine.Video;
 
 public class Timer : MonoBehaviour
 {
-
+    
     public Text tiempoText;
     public bool halfTime = true;
     public int contadorTime;
     public float tiempo = 15f;
-
+    public GameObject half = GameObject.Find("half");
+    //private Cliente cliente;
+    //public Timer(Cliente cliente)
+    //{
+    //    this.cliente = cliente;
+    //}
     //public void Start()
     //{
 
@@ -58,12 +65,18 @@ public class Timer : MonoBehaviour
                     tiempo = 5f;
 
                     contadorTime++;
-                    SceneManager.LoadScene("halfTime");
+                    
+                    //half.SetActive(false);
+                    
+                    //SceneManager.LoadScene("halfTime");
                 }
                 else
                 {
-                    halfTime = false;
+                    
+                    halfTime = false;   
                     tiempo = 15f;
+
+                    //half.SetActive(true);
                 }
 
 
@@ -74,7 +87,7 @@ public class Timer : MonoBehaviour
         }
         else
         {
-            SceneManager.LoadScene("SampleScene");
+            //SceneManager.LoadScene("SampleScene");
             if (tiempo > 0)
             {
 

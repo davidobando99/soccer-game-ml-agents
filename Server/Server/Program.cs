@@ -39,6 +39,7 @@ namespace Server
 
         private List<ServerClient> clients = new List<ServerClient>();
         private List<ServerClient> disconnectList = new List<ServerClient>();
+         
         private TcpListener server;
         private bool serverStarted;
         private List<Unit> units = new List<Unit>();
@@ -140,6 +141,26 @@ namespace Server
         }
 
         private bool IsConnected(TcpClient c)
+        {
+            try
+            {
+                if (c != null && c.Client != null && c.Client.Connected)
+                {
+                    if (c.Client.Poll(0, SelectMode.SelectRead))
+                        return !(c.Client.Receive(new byte[1], SocketFlags.Peek) == 0);
+
+                    return true;
+                }
+                else
+                    return false;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        private bool IsConnected(UdpClient c)
         {
             try
             {
@@ -390,11 +411,16 @@ namespace Server
     {
         public string clientName;
         public int id;
+        public string typeConection;
         public TcpClient tcp;
+       
         public ServerClient(TcpClient tcp)
         {
             this.tcp = tcp;
+
         }
+
+        
     }
 
     public class Unit

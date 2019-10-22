@@ -11,7 +11,7 @@ using System.Globalization;
 
 namespace Assets.Modelo
 {
-    class Cliente : MonoBehaviour
+     class Cliente : MonoBehaviour
     {
         public string clientName;
         private int portToConnect = 6321;
@@ -29,9 +29,9 @@ namespace Assets.Modelo
         private Colide balon;
         private Timer timer;
         private int Goals;
+        //public GameObject half = GameObject.Find("half");
+
        
-
-
 
         private void Start()
         {
@@ -112,6 +112,8 @@ namespace Assets.Modelo
                 case "Autenticado":
                     
                     SceneManager.LoadScene("SampleScene");
+             
+                    //half.SetActive(false);
                     break;
                 case "UnidadAgregada":
                   
@@ -153,6 +155,7 @@ namespace Assets.Modelo
                         if (timer == null)
                         {
                             timer = new Timer();
+                            
                             GameObject time = GameObject.Find("Tiempo");
                             timer = time.AddComponent<Timer>();
                             timer.tiempoText = time.GetComponent<Text>();
