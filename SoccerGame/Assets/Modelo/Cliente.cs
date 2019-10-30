@@ -8,6 +8,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using UnityEngine.AI;
 using System.Globalization;
+using System.Diagnostics;
 
 namespace Assets.Modelo
 {
@@ -65,7 +66,7 @@ namespace Assets.Modelo
             }
             catch (Exception e)
             {
-                Debug.Log("Socket error " + e.Message);
+                //Debug.Log("Socket error " + e.Message);
             }
 
             return socketReady;
@@ -102,7 +103,7 @@ namespace Assets.Modelo
         private void OnIncomingData(string data)
         {
             string[] aData = data.Split('|');
-            Debug.Log("Recibido desde el servidor: " + data);
+            //Debug.Log("Recibido desde el servidor: " + data);
 
             switch (aData[0])
             {
@@ -110,7 +111,7 @@ namespace Assets.Modelo
                     Send("YoSoy|" + clientName + "|" + password);
                     break;
                 case "Autenticado":
-                    
+                    Process.Start(@"C:\Users\Laura\git\SoccerGame\SoccerGame\ClienteUDP\ClienteUDP\bin\Debug\ClienteUDP.exe");
                     SceneManager.LoadScene("SampleScene");
              
                     //half.SetActive(false);
@@ -286,7 +287,7 @@ namespace Assets.Modelo
                 //    break;
 
                 default:
-                    Debug.Log("Comando recibido erroneo");
+                    //Debug.Log("Comando recibido erroneo");
                     break;
             }
         }
@@ -327,7 +328,7 @@ namespace Assets.Modelo
             }
             catch (Exception e)
             {
-                Debug.Log(e.Message);
+                //Debug.Log(e.Message);
             }
         }
     }

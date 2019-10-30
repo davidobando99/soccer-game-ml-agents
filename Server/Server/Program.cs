@@ -13,6 +13,7 @@ namespace Server
     static class Program
     {
         public static ServerAction server;
+        public static ServerUDP serverUdp;
         public static Form1 form;
         /// <summary>
         /// The main entry point for the application.
@@ -23,7 +24,7 @@ namespace Server
 
 
             server = new ServerAction();
-
+            serverUdp = new ServerUDP();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             form = new Form1();

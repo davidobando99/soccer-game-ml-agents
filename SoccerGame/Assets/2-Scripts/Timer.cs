@@ -2,6 +2,7 @@
 using Assets.Modelo;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -65,9 +66,19 @@ public class Timer : MonoBehaviour
                     tiempo = 5f;
 
                     contadorTime++;
+                    //ProcessStartInfo psi = new ProcessStartInfo();
+                    //psi.UseShellExecute = true;
                     
+                    
+
+                    //Process.Start(@"C:\Users\Laura\git\SoccerGame\SoccerGame\ClienteUDP\ClienteUDP\bin\Debug\ClienteUDP.exe");
+                    
+
+
+
+
                     //half.SetActive(false);
-                    
+
                     //SceneManager.LoadScene("halfTime");
                 }
                 else

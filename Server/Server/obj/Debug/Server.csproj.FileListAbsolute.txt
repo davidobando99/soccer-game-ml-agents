@@ -43,3 +43,39 @@ C:\Users\juanm\OneDrive\Desktop\Proyecto Redes\SoccerGame\Server\Server\obj\Debu
 C:\Users\juanm\OneDrive\Desktop\Proyecto Redes\SoccerGame\Server\Server\obj\Debug\Server.csproj.GenerateResource.cache
 C:\Users\juanm\OneDrive\Desktop\Proyecto Redes\SoccerGame\Server\Server\obj\Debug\Server.exe
 C:\Users\juanm\OneDrive\Desktop\Proyecto Redes\SoccerGame\Server\Server\obj\Debug\Server.pdb
+C:\Users\Laura\git\SoccerGame\Server\Server\bin\Debug\x64\concrt140.dll
+C:\Users\Laura\git\SoccerGame\Server\Server\bin\Debug\x64\cvextern.dll
+C:\Users\Laura\git\SoccerGame\Server\Server\bin\Debug\x64\msvcp140.dll
+C:\Users\Laura\git\SoccerGame\Server\Server\bin\Debug\x64\opencv_videoio_ffmpeg411_64.dll
+C:\Users\Laura\git\SoccerGame\Server\Server\bin\Debug\x64\vcruntime140.dll
+C:\Users\Laura\git\SoccerGame\Server\Server\bin\Debug\x86\concrt140.dll
+C:\Users\Laura\git\SoccerGame\Server\Server\bin\Debug\x86\cvextern.dll
+C:\Users\Laura\git\SoccerGame\Server\Server\bin\Debug\x86\msvcp140.dll
+C:\Users\Laura\git\SoccerGame\Server\Server\bin\Debug\x86\opencv_videoio_ffmpeg411.dll
+C:\Users\Laura\git\SoccerGame\Server\Server\bin\Debug\x86\vcruntime140.dll
+C:\Users\Laura\git\SoccerGame\Server\Server\bin\Debug\Accord.dll.config
+C:\Users\Laura\git\SoccerGame\Server\Server\bin\Debug\Accord.dll
+C:\Users\Laura\git\SoccerGame\Server\Server\bin\Debug\Accord.Video.dll
+C:\Users\Laura\git\SoccerGame\Server\Server\bin\Debug\Emgu.CV.UI.dll
+C:\Users\Laura\git\SoccerGame\Server\Server\bin\Debug\Emgu.CV.World.dll
+C:\Users\Laura\git\SoccerGame\Server\Server\bin\Debug\MediaToolkit.dll
+C:\Users\Laura\git\SoccerGame\Server\Server\bin\Debug\ZedGraph.dll
+C:\Users\Laura\git\SoccerGame\Server\Server\bin\Debug\Accord.xml
+C:\Users\Laura\git\SoccerGame\Server\Server\bin\Debug\Accord.Video.xml
+C:\Users\Laura\git\SoccerGame\Server\Server\bin\Debug\Emgu.CV.UI.xml
+C:\Users\Laura\git\SoccerGame\Server\Server\bin\Debug\Emgu.CV.World.xml
+C:\Users\Laura\git\SoccerGame\Server\Server\bin\Debug\ZedGraph.xml
+C:\Users\Laura\git\SoccerGame\Server\Server\bin\Debug\de\ZedGraph.resources.dll
+C:\Users\Laura\git\SoccerGame\Server\Server\bin\Debug\es\ZedGraph.resources.dll
+C:\Users\Laura\git\SoccerGame\Server\Server\bin\Debug\fr\ZedGraph.resources.dll
+C:\Users\Laura\git\SoccerGame\Server\Server\bin\Debug\hu\ZedGraph.resources.dll
+C:\Users\Laura\git\SoccerGame\Server\Server\bin\Debug\it\ZedGraph.resources.dll
+C:\Users\Laura\git\SoccerGame\Server\Server\bin\Debug\ja\ZedGraph.resources.dll
+C:\Users\Laura\git\SoccerGame\Server\Server\bin\Debug\pt\ZedGraph.resources.dll
+C:\Users\Laura\git\SoccerGame\Server\Server\bin\Debug\ru\ZedGraph.resources.dll
+C:\Users\Laura\git\SoccerGame\Server\Server\bin\Debug\sk\ZedGraph.resources.dll
+C:\Users\Laura\git\SoccerGame\Server\Server\bin\Debug\sv\ZedGraph.resources.dll
+C:\Users\Laura\git\SoccerGame\Server\Server\bin\Debug\tr\ZedGraph.resources.dll
+C:\Users\Laura\git\SoccerGame\Server\Server\bin\Debug\zh-cn\ZedGraph.resources.dll
+C:\Users\Laura\git\SoccerGame\Server\Server\bin\Debug\zh-tw\ZedGraph.resources.dll
+C:\Users\Laura\git\SoccerGame\Server\Server\obj\Debug\Server.csproj.CopyComplete
