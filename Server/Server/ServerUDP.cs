@@ -174,6 +174,10 @@ namespace Server
                     Console.WriteLine("Datos " + x);
                     Console.WriteLine("Contador " + i);
                 }
+                byte[] data = Encoding.ASCII.GetBytes(@"C:\Users\David Obando\Repos\SoccerGame\Server\Server\bin\Debug\Videos\Video1.mp4");
+                Datos.Clear();
+                Datos.Add(data);
+                Console.WriteLine("Termine");
                 Console.WriteLine("Termine");
             }
 

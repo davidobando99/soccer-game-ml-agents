@@ -111,7 +111,7 @@ namespace Assets.Modelo
                     Send("YoSoy|" + clientName + "|" + password);
                     break;
                 case "Autenticado":
-                    Process.Start(@"C:\Users\Laura\git\SoccerGame\SoccerGame\ClienteUDP\ClienteUDP\bin\Debug\ClienteUDP.exe");
+                    //Process.Start(@"C:\Users\Laura\git\SoccerGame\SoccerGame\ClienteUDP\ClienteUDP\bin\Debug\ClienteUDP.exe");
                     SceneManager.LoadScene("SampleScene");
              
                     //half.SetActive(false);

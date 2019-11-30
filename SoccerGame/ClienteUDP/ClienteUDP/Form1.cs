@@ -48,7 +48,7 @@ namespace ClienteUDP
         {
 
             var client = new UdpClient();
-            IPEndPoint RemoteIpEndPoint = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 11000); 
+            IPEndPoint RemoteIpEndPoint = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 11000);
             client.Connect(RemoteIpEndPoint);
 
             // send data
@@ -56,28 +56,25 @@ namespace ClienteUDP
             client.Send(m, m.Length);
             Console.WriteLine("ooooooo");
             int i = 0;
-            while (true) {
+            while (true)
+            {
                 Console.WriteLine("uuuuuuu");
 
                 var receiveBytes = client.Receive(ref RemoteIpEndPoint);
+
+
                 
-            Image img = ByteArrayToImage(receiveBytes);
-                
-                img.Save("Video/foto-"+i+".jpeg");
-                Console.WriteLine("Foto " + i);
+                //Console.WriteLine();
                 //pictureBox1.Image = img;
                 i++;
-            string returnData = Encoding.ASCII.GetString(receiveBytes);
-            //txtDatos.Text = returnData;
+                string returnData = Encoding.ASCII.GetString(receiveBytes);
+                //txtDatos.Text = returnData;
 
-                Console.WriteLine("DATOS DEL SERVER " + "imagen");
+                Console.WriteLine("Video listo");
+                axWindowsMediaPlayer1.URL = returnData;
+                axWindowsMediaPlayer1.Ctlcontrols.play();
+                Console.WriteLine("DATOS DEL SERVER ");
                 Thread.Sleep(100);
-
-                if (i == 28)
-                {
-                    ShowFrames();
-                }
-               
 
             }
         }
@@ -122,20 +119,7 @@ namespace ClienteUDP
             return returnImage;
         }
 
-        private void butRead_Click(object sender, EventArgs e)
-        {
-
-            if (video)
-            {
-                axWindowsMediaPlayer1.URL = "Video/videito1.mp4";
-                axWindowsMediaPlayer1.Ctlcontrols.play();
-
-            }
-        
-            
-            //Connect("Holi soy tu cliente");
-        }
-
+       
         private void PictureBox1_Click(object sender, EventArgs e)
         {
 

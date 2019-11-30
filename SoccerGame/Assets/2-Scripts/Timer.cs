@@ -66,13 +66,11 @@ public class Timer : MonoBehaviour
                     tiempo = 5f;
 
                     contadorTime++;
-                    //ProcessStartInfo psi = new ProcessStartInfo();
-                    //psi.UseShellExecute = true;
-                    
-                    
+                    Process p = new Process();
+                    p.StartInfo.FileName = (@"C:\Users\David Obando\Repos\SoccerGame\SoccerGame\ClienteUDP\ClienteUDP\bin\Debug\ClienteUDP.exe");
 
-                    //Process.Start(@"C:\Users\Laura\git\SoccerGame\SoccerGame\ClienteUDP\ClienteUDP\bin\Debug\ClienteUDP.exe");
-                    
+                    p.Start();
+
 
 
 
